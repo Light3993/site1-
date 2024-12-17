@@ -385,6 +385,7 @@ form.addEventListener('submit', async function(e) {
     try {
         // Remplacez l'URL par celle de votre script Google Apps
         const response = await fetch('https://script.google.com/macros/s/1ZWqecmF-YV0Yt_WjVwR4gLT2gKRaGVtq0NnLSvIOLEtKhWMegFuC1Dp-/exec', {
+            mode: 'no-cors'
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
