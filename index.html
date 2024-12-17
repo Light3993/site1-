@@ -362,52 +362,53 @@
         const submitBtn = document.getElementById('submitBtn');
         const loadingSpinner = submitBtn.querySelector('.loading');
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            submitBtn.disabled = true;
-            loadingSpinner.style.display = 'inline-block';
-            submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrement...';
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    submitBtn.disabled = true;
+    loadingSpinner.style.display = 'inline-block';
+    submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrement...';
 
-            const formData = new FormData(form);
-            const studentData = {
-                nom: formData.get('nom'),
-                prenoms: formData.get('prenoms'),
-                date_naissance: formData.get('date_naissance'),
-                adresse: formData.get('adresse'),
-                telephone: formData.get('telephone'),
-                email: formData.get('email'),
-                filiere: formData.get('filiere'),
-                semestre: formData.get('semestre'),
-                photo_url: preview.src // Utiliser l'URL de prévisualisation
-            };
+    const formData = new FormData(form);
+    const studentData = {
+        nom: formData.get('nom'),
+        prenoms: formData.get('prenoms'),
+        date_naissance: formData.get('date_naissance'),
+        adresse: formData.get('adresse'),
+        telephone: formData.get('telephone'),
+        email: formData.get('email'),
+        filiere: formData.get('filiere'),
+        semestre: formData.get('semestre'),
+        photo_url: preview.src // Utiliser l'URL de prévisualisation
+    };
 
-            try {
-                // Envoyer les données à Google Sheets
-                const response = await fetch('https://script.google.com/u/0/home/projects/1ZWqecmF-YV0Yt_WjVwR4gLT2gKRaGVtq0NnLSvIOLEtKhWMegFuC1Dp-/edit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(studentData)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Erreur lors de l\'enregistrement des données.');
-                }
-
-                showNotification('Inscription réussie !', 'success');
-                form.reset();
-                photoPreview.style.display = 'none';
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('Erreur lors de l\'inscription. Veuillez réessayer.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                loadingSpinner.style.display = 'none';
-                submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrer';
-            }
+    try {
+        // Remplacez l'URL par celle de votre script Google Apps
+        const response = await fetch('https://script.google.com/macros/s/1ZWqecmF-YV0Yt_WjVwR4gLT2gKRaGVtq0NnLSvIOLEtKhWMegFuC1Dp-/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(studentData)
         });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de l\'enregistrement des données.');
+        }
+
+        showNotification('Inscription réussie !', 'success');
+        form.reset();
+        photoPreview.style.display = 'none';
+    } catch (error) {
+        console.error('Erreur:', error);
+        showNotification('Erreur lors de l\'inscription. Veuillez réessayer.', 'error');
+    } finally {
+        submitBtn.disabled = false;
+        loadingSpinner.style.display = 'none';
+        submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrer';
+    }
+});
+
     </script>
 </body>
 </html>
