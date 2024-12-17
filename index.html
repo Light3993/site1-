@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription EPL</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables CSS */
+        :root {
+            --primary-color: #3B82F6;
+            --primary-hover: #2563EB;
+            --background-color: #F3F4F6;
+            --form-background: rgba(255, 255, 255, 0.95);
+            --text-color: #1F2937;
+            --border-color: #D1D5DB;
+            --error-color: #EF4444;
+            --success-color: #10B981;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            min-height: 100vh;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            max-width: 300px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .success {
+            background-color: var(--success-color);
+        }
+
+        .error {
+            background-color: var(--error-color);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            width: 150px;
+            height: 80px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .registration-form {
+            background-color: var(--form-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .photo-section {
+            margin-top: 2rem;
+        }
+
+        .photo-upload {
+            border: 2px dashed var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-upload:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .photo-preview {
+            margin: 1rem auto;
+            max-width: 200px;
+            max-height: 200px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .submit-section {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            header {
+                padding: 0.5rem;
+            }
+
+            .logo-container {
+                width: 100px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <!-- Remplacer src par votre URL de logo -->
+            <img src="https://th.bing.com/th/id/OIP.AQ-vlqgp9iyDGW8ag9oCsgHaHS?rs=1&pid=ImgDetMain" alt="Logo 1" class="logo" id="logo1">
+        </div>
+        <div class="logo-container">
+            <!-- Remplacer src par votre URL de logo -->
+            <img src="https://www.pikpng.com/pngl/b/522-5220491_accueil-university-of-lom-clipart.png" alt="Logo 2" class="logo" id="logo2">
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Enregistrement des Étudiants - EPL</h1>
+        
+        <form class="registration-form" id="registrationForm">
+            <div class="form-grid">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenoms">Prénoms</label>
+                        <input type="text" id="prenoms" name="prenoms" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date_naissance">Date de naissance</label>
+                        <input type="date" id="date_naissance" name="date_naissance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <textarea id="adresse" name="adresse" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="telephone">Numéro de téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filiere">Filière</label>
+                        <select id="filiere" name="filiere" required>
+                            <option value="">Sélectionnez une filière</option>
+                            <option value="lt">Logistique & transport</option>
+                            <option value="ia">Intelligence artificielle & Big data</option>
+                            <option value="is">Informatique & système</option>
+                            <option value="gm">LG Génie Mécanique</option>
+                            <option value="gc">LF Génie civil</option>
+                            <option value="ge">LF Génie Electrique</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="semestre">Semestre</label>
+                        <select id="semestre" name="semestre" required>
+                            <option value="">Sélectionnez un semestre</option>
+                            <option value="s1">Semestre 1</option>
+                            <option value="s2">Semestre 2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-section">
+                <label for="photo">Photo d'identité</label>
+                <div class="photo-upload" id="photoUpload">
+                    <input type="file" id="photo" name="photo" accept="image/*" required>
+                    <div class="photo-preview">
+                        <img id="preview" src="#" alt="Aperçu photo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" id="submitBtn">
+                    <span>Enregistrer</span>
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js';
+
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkGsIfvc7VvLG1m82OpyMq6C-ZcBmWQwk",
+            authDomain: "mon-projet-9a526.firebaseapp.com",
+            databaseURL: "https://mon-projet-9a526-default-rtdb.firebaseio.com",
+            projectId: "mon-projet-9a526",
+            storageBucket: "mon-projet-9a526.appspot.com",
+            messagingSenderId: "149961784280",
+            appId: "1:149961784280:web:06be028184f357bb9c90ad",
+            measurementId: "G-R1XLK84BP5"
+        };
+
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Fonction pour afficher les notifications
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Prévisualisation de la photo
+        const photoInput = document.getElementById('photo');
+        const preview = document.getElementById('preview');
+        const photoPreview = document.querySelector('.photo-preview');
+
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    preview.src = reader.result;
+                    photoPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Gestion du formulaire
+        const form = document.getElementById('registrationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSpinner = submitBtn.querySelector('.loading');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrement...';
+
+            try {
+                const formData = new FormData(form);
+                const photoFile = formData.get('photo');
+
+                // Upload de la photo
+                const photoRef = ref(storage, `photos/${Date.now()}-${photoFile.name}`);
+                const photoSnapshot = await uploadBytes(photoRef, photoFile);
+                const photoUrl = await getDownloadURL(photoSnapshot.ref);
+
+                // Création de l'objet étudiant
+                const studentData = {
+                    nom: formData.get('nom'),
+                    prenoms: formData.get('prenoms'),
+                    dateNaissance: formData.get('date_naissance'),
+                    adresse: formData.get('adresse'),
+                    telephone: formData.get('telephone'),
+                    email: formData.get('email'),
+                    filiere: formData.get('filiere'),
+                    semestre: formData.get('semestre'),
+                    photoUrl: photoUrl,
+                    dateInscription: new Date().toISOString()
+                };
+
+                // Sauvegarde dans Firestore
+                await addDoc(collection(db, 'etudiants'), studentData);
+
+                showNotification('Inscription réussie !', 'success');
+                form.reset();
+                photoPreview.style.display = 'none';
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors de l\'inscription. Veuillez réessayer.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+                submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrer';
+            }
+        });
+    </script>
+</body>
+</html>
