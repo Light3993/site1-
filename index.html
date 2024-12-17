@@ -239,11 +239,9 @@
 <body>
     <header>
         <div class="logo-container">
-            <!-- Espace réservé pour le logo 1 -->
             <img src="" alt="Logo 1" class="logo" id="logo1">
         </div>
         <div class="logo-container">
-            <!-- Espace réservé pour le logo 2 -->
             <img src="" alt="Logo 2" class="logo" id="logo2">
         </div>
     </header>
@@ -329,30 +327,7 @@
         </form>
     </div>
 
-    <!-- Firebase -->
-    <script type="module">
-        // Import Firebase
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-        import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js';
-
-        // Configuration Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAkGsIfvc7VvLG1m82OpyMq6C-ZcBmWQwk",
-            authDomain: "mon-projet-9a526.firebaseapp.com",
-            databaseURL: "https://mon-projet-9a526-default-rtdb.firebaseio.com",
-            projectId: "mon-projet-9a526",
-            storageBucket: "mon-projet-9a526.appspot.com",
-            messagingSenderId: "149961784280",
-            appId: "1:149961784280:web:06be028184f357bb9c90ad",
-            measurementId: "G-R1XLK84BP5"
-        };
-
-        // Initialiser Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
+    <script>
         // Fonction pour afficher les notifications
         function showNotification(message, type) {
             const notification = document.createElement('div');
@@ -394,36 +369,36 @@
             loadingSpinner.style.display = 'inline-block';
             submitBtn.querySelector('span:not(.loading)').textContent = 'Enregistrement...';
 
+            const formData = new FormData(form);
+            const studentData = {
+                nom: formData.get('nom'),
+                prenoms: formData.get('prenoms'),
+                date_naissance: formData.get('date_naissance'),
+                adresse: formData.get('adresse'),
+                telephone: formData.get('telephone'),
+                email: formData.get('email'),
+                filiere: formData.get('filiere'),
+                semestre: formData.get('semestre'),
+                photo_url: preview.src // Utiliser l'URL de prévisualisation
+            };
+
             try {
-                const formData = new FormData(form);
-                const photoFile = formData.get('photo');
+                // Envoyer les données à Google Sheets
+                const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTQgildtPHfX-i5-gbA4_fu3SHdkgBZseE702Ofw71nZZ42D266bNtyadih3f1047YRhLNzsIDjR2fr/pubhtml', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(studentData)
+                });
 
-                // Upload de la photo
-                const photoRef = ref(storage, `photos/${Date.now()}-${photoFile.name}`);
-                const photoSnapshot = await uploadBytes(photoRef, photoFile);
-                const photoUrl = await getDownloadURL(photoSnapshot.ref);
-
-                // Création de l'objet étudiant
-                const studentData = {
-                    nom: formData.get('nom'),
-                    prenoms: formData.get('prenoms'),
-                    dateNaissance: formData.get('date_naissance'),
-                    adresse: formData.get('adresse'),
-                    telephone: formData.get('telephone'),
-                    email: formData.get('email'),
-                    filiere: formData.get('filiere'),
-                    semestre: formData.get('semestre'),
-                    photoUrl: photoUrl,
-                    dateInscription: new Date().toISOString()
-                };
-
-                // Sauvegarde dans Firestore
-                await addDoc(collection(db, 'etudiants'), studentData);
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'enregistrement des données.');
+                }
 
                 showNotification('Inscription réussie !', 'success');
                 form.reset();
                 photoPreview.style.display = 'none';
-
             } catch (error) {
                 console.error('Erreur:', error);
                 showNotification('Erreur lors de l\'inscription. Veuillez réessayer.', 'error');
