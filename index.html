@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPL - Inscription des Étudiants</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Police moderne pour l'interface -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Conteneur principal avec effet de fond animé -->
+    <div class="container">
+        <!-- En-tête avec logos -->
+        <header class="header">
+            <div class="logo-container" id="logo1">
+                <!-- Espace réservé pour le logo 1 -->
+                <div class="logo-placeholder">Logo 1</div>
+            </div>
+            
+            <div class="title-container">
+                <h1 class="main-title">Enregistrement Étudiants LF EPL</h1>
+                <p class="subtitle">Portail d'enregistrement des étudiants de LF</p>
+            </div>
+            
+            <div class="logo-container" id="logo2">
+                <!-- Espace réservé pour le logo 2 -->
+                <div class="logo-placeholder">Logo 2</div>
+            </div>
+        </header>
+
+        <!-- Formulaire d'inscription avec effet flottant -->
+        <main class="main-content">
+            <div class="form-container floating-panel">
+                <h2>Formulaire d'enregistrement</h2>
+                
+                <form id="registrationForm" class="registration-form">
+                    
+                    
+
+                    <!-- Informations personnelles -->
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prenoms">Prénoms</label>
+                            <input type="text" id="prenoms" name="prenoms" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateNaissance">Date de Naissance</label>
+                            <input type="date" id="dateNaissance" name="dateNaissance" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sexe">Sexe</label>
+                            <select id="sexe" name="sexe" required class="floating-input">
+                                <option value="">Sélectionner</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Féminin</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" id="adresse" name="adresse" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telephone">Téléphone</label>
+                            <input type="tel" id="telephone" name="telephone" required class="floating-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filiere">Filière</label>
+                            <select id="filiere" name="filiere" required class="floating-input">
+                                <option value="">Sélectionner une filière</option>
+                                <option value="logistique">Logistique & Transport</option>
+                                <option value="ia">Intelligence Artificielle et Big Data</option>
+                                <option value="informatique">Informatique et Système</option>
+                                <option value="mecanique">LF Génie Mécanique</option>
+                                <option value="civil">LF Génie Civil</option>
+                                <option value="electrique">LF Génie Électrique</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semestre">Semestre</label>
+                            <select id="semestre" name="semestre" required class="floating-input">
+                                <option value="">Sélectionner un semestre</option>
+                                <option value="1">Semestre 1</option>
+                                <option value="2">Semestre 2</option>
+                            </select>
+                        </div>
+                    </div>
+                          <!-- Section Photo -->
+                    <div class="form-section photo-section">
+                        <div class="photo-preview" id="photoPreview">
+                            <img src="assets/placeholder.png" alt="Photo" id="previewImage">
+                        </div>
+                        <input type="file" id="photo" name="photo" accept="image/*" class="photo-input">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Soumettre</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="js/animations.js"></script>
+    <script src="js/form-validation.js"></script>
+    <script src="js/photo-preview.js"></script>
+</body>
+</html>
