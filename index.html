@@ -4,42 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPL - Inscription des Étudiants</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
     <!-- Police moderne pour l'interface -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <script src=" https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js"></script>
+   
+    <script src=" https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js"></script>
     <!-- Conteneur principal avec effet de fond animé -->
     <div class="container">
         <!-- En-tête avec logos -->
         <header class="header">
             <div class="logo-container" id="logo1">
                 <!-- Espace réservé pour le logo 1 -->
-                <div class="logo-placeholder">Logo 1</div>
+                <div class="logo-placeholder">
+                    <img src="https://media.licdn.com/dms/image/C4E0BAQFvQxT6RrCAuw/company-logo_200_200/0/1678781271799/cole_polytechnique_de_lom_ul_logo?e=2147483647&v=beta&t=k34jtQ3j3yEjx8moo3BhFxLyD_OjgnpkUtQbxIgM7lc" alt="Logo1">
+                </div>
             </div>
             
             <div class="title-container">
-                <h1 class="main-title">Enregistrement Étudiants LF EPL</h1>
-                <p class="subtitle">Portail d'enregistrement des étudiants de LF</p>
+                <h1 class="main-title">     École Polytechnique de Lomé </h1>
+                <p class="subtitle">Portail d'enregistrement des étudiants de la LF</p>
             </div>
             
             <div class="logo-container" id="logo2">
                 <!-- Espace réservé pour le logo 2 -->
-                <div class="logo-placeholder">Logo 2</div>
+                <div class="logo-placeholder">
+                    <img src="https://th.bing.com/th/id/R.2b5f2a454d72746db61f581f3a9f0e06?rik=hdzcK33CJzbV1w&pid=ImgRaw&r=0" alt="Logo2">
+                </div>
             </div>
         </header>
 
         <!-- Formulaire d'inscription avec effet flottant -->
         <main class="main-content">
             <div class="form-container floating-panel">
-                <h2>Formulaire d'enregistrement</h2>
+                <h2>Formulaire d'Enregistrement</h2>
                 
                 <form id="registrationForm" class="registration-form">
-                    
-                    
-
+                   
                     <!-- Informations personnelles -->
                     <div class="form-grid">
                         <div class="form-group">
@@ -102,16 +107,16 @@
                                 <option value="2">Semestre 2</option>
                             </select>
                         </div>
-                    </div>
-                          <!-- Section Photo -->
-                    <div class="form-section photo-section">
-                        <div class="photo-preview" id="photoPreview">
-                            <img src="assets/placeholder.png" alt="Photo" id="previewImage">
-                        </div>
-                        <input type="file" id="photo" name="photo" accept="image/*" class="photo-input">
-                    </div>
 
-                    <button type="submit" class="submit-btn">Soumettre</button>
+                         <!-- Section Photo -->
+                         <div class="form-section photo-section">
+                                  <div class="photo-preview" id="photoPreview">
+                                     <img src="assets/placeholder.png" alt="Photo" id="previewImage">
+                                  </div>
+                                    <input type="file" id="photo" name="photo" accept="image/*" class="photo-input">
+                          </div>
+                    </div>
+                    <button type="submit" class="submit-btn" value="submit" >Soumettre</button>
                 </form>
             </div>
         </main>
@@ -121,8 +126,8 @@
     <div id="toast" class="toast"></div>
 
     <!-- Scripts -->
-    <script src="js/animations.js"></script>
-    <script src="js/form-validation.js"></script>
-    <script src="js/photo-preview.js"></script>
+    <script src="animations.js"></script>
+    <script src="form-validation.js"></script>
+    <script src="photo-preview.js"></script>
 </body>
 </html>
